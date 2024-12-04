@@ -1,5 +1,5 @@
-# Astro with Daisy UI (a Tailwind CSS plugin)
+# Dashboard Project Pt. Deux
 
-Astro API to retreive API REST data and display with Daisy UI (a Tailwind plugin). 
+This is the "Morning Dashboard" I have been working on - Migrating it over to a repo with Astro already installed for convenience.
 
 

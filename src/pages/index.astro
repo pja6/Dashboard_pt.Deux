@@ -8,9 +8,259 @@ import '../styles/myCustomStyles.css';
 // Your App
 // import your <App />
 ---
+<script>
+
+
+
+
+// City
+const city = 'Spokane';
+// Units for Farenheit
+const units = 'imperial';
+const cityName=document.querySelector("h1");
+const cityTemp=document.getElementById("temp"); 
+const weatherDesc=document.getElementById("desc");
+const windSpeed=document.getElementById("wind");
+const feelsLike=document.getElementById("feels");
+const weatherIcon = document.querySelector("img");
+
+//weather
+const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKEY}&units=${units}`;
+console.log(url);
+
+fetch(url)
+.then(response => response.json())
+.then( weatherData => {
+  //check
+  console.log( weatherData );
+  console.log( weatherData.name );
+  console.log( weatherData.main.temp );
+  console.log(weatherData.weather[0].description)
+ 
+  cityName.textContent = weatherData.name;
+  weatherDesc.textContent=
+    weatherData.weather[0].description;
+  cityTemp.textContent = weatherData.main.temp+"°F"; ;
+  feelsLike.textContent = weatherData.main.feels_like+"°F";
+  windSpeed.textContent="Wind Speed: "+weatherData.wind.speed+" mph";
+  weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`);
+}); 
+//https://api.openweathermap.org/data/2.5/weather?q=chicago
+navigator.geolocation.getCurrentPosition(function(position){
+    const lat=position.coords.latitude;
+    const long=position.coords.longitude;
+  console.log(lat, long);
+})
+
+//Clock
+/************
+Dynamic Data
+************/
+// define `theClockApp` stored in function to be ran
+const theClockApp = () => {
+    // Get and store current date and time with `new Date()` object
+    const timeNow = new Date();
+    // Check-Check: See all `Date()` methods and properties
+    // console.log( timeNow );
+  
+    // Get current hours
+    let gotHours = timeNow.getHours();
+    // Get current minutes
+    let gotMinutes = timeNow.getMinutes();
+    // Get current seconds
+    let gotSeconds = timeNow.getSeconds();
+  
+    // Check-Check: Is the data correct?
+    // console.log(gotHours, gotMinutes, gotSeconds);
+  
+    /************
+  Format Data
+  ************/
+    // Get AM or PM
+    const gotAmOrPM = gotHours >= 12 ? "PM" : "AM";
+    // Get 12 hour format
+    gotHours = gotHours % 12 || 12;
+    // Optionally, append zero to single digit hours
+    gotHours = gotHours < 10 ? `${gotHours}` : gotHours;
+    // Optionally, append zero to single digit minutes
+    gotMinutes = gotMinutes < 10 ? `0${gotMinutes}` : gotMinutes;
+    // Optionally, append zero to single digit seconds
+    gotSeconds = gotSeconds < 10 ? `0${gotSeconds}` : gotSeconds;
+  
+    /************
+  Get DOM Elements
+  ************/
+    // Get Time
+    const time = document.querySelector("time");
+    // Get Hours
+    const hours = document.querySelector(".hours");
+    // Get minutes
+    const minutes = document.querySelector(".minutes");
+    // Get seconds
+    const seconds = document.querySelector(".seconds");
+    // Get AM or PM
+    const amOrPM = document.querySelector(".amOrPM");
+  
+    /************
+  Set DOM Elements
+  ************/
+    // Set the hours
+    hours.innerText = gotHours;
+    // Set the minutes
+    minutes.innerText = gotMinutes;
+    // Set the seconds
+    seconds.innerText = gotSeconds;
+    // Set AM or PM
+    amOrPM.innerText = gotAmOrPM;
+    // Set `datetime` attribute
+    time.setAttribute("datetime", `${gotHours}:${gotMinutes}`);
+  };
+  
+  /************
+  Run App
+  ************/
+  // Re-run `theClockApp` every 1 second (1000 ms)
+  setInterval(theClockApp, 1000);
+  
+//Date
+/************
+Static Data
+************/
+const allTheMonths = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "Oct",
+    "November",
+    "December"
+  ];
+  const allTheDays = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  
+  /************
+  Dynamic Data
+  ************/
+  // Get and store current date and time with `new Date()` object
+  const dateNow = new Date();
+  // Check-Check: See all `Date()` methods and properties
+  console.log(dateNow);
+  
+  const gotMonth = dateNow.getMonth();
+  // Get current day of the month
+  let gotDayOfMonth = dateNow.getDate();
+  // Get current year
+  const gotYear = dateNow.getFullYear();
+  // Get current day of the week
+  const gotDayOfWeek = dateNow.getDay();
+  
+  // Check-Check: Is the data correct?
+  console.log(gotMonth, gotDayOfMonth, gotYear, gotDayOfWeek);
+  
+  /************
+  Get DOM Elements
+  ************/
+  // Get the month
+  const month = document.querySelector(".month");
+  // Get day of the month
+  const dayOfMonth = document.querySelector(".dayOfMonth");
+  // Get year
+  const year = document.querySelector(".year");
+  // Get Day of Week
+  const dayOfWeek = document.querySelector(".dayOfWeek");
+  
+  /************
+  Set DOM Elements
+  ************/
+  // Set the month
+  month.innerText = allTheMonths[gotMonth];
+  // Set day of the month
+  dayOfMonth.innerText = gotDayOfMonth;
+  // Set the year
+  year.innerText = gotYear;
+  // Set the day of the week
+  dayOfWeek.innerText = allTheDays[gotDayOfWeek];
+
+  //BizSpeak of the day
+
+  const bizURL = 'https://corporatebs-generator.sameerkumar.website/';
+
+  const bizSpeakOutput = document.getElementById('bizPhrase');
+  console.log(bizURL);
+
+  bizSpeakOutput.innerText=bizURL;
+  fetch(bizURL)
+  .then(response => response.json())
+  .then( bizSpeak => {
+    //check
+    console.log( bizSpeak );
+    console.log( bizSpeak.phrase );
+    bizSpeakOutput.innerText = bizSpeak.phrase;
+  });
+</script>
+
+
 
 <BaseLayout>
-	
-	✅ Check ✅ Check
+	<div class="bg-[url('https://downtownspokane.org/wp-content/uploads/2023/04/AdobeStock_491684354-scaled.jpeg')] bg-center bg-cover bg-no-repeat  h-screen flex justify-center items-center">
+		<div class="card glass w-96 h-svh my-36 overflow-ellipsis">
+            <div class="flex flex-col justify-center items-center stat">
+           
+                    <div class="flex flex-col justify-center items-center space-x-2">
+                        <div class="card-body items-center text-center">
+                            <data class="dayOfWeek hero-content drop-shadow font-bold text-6xl text-yellow-300">SMTWTFS</data>
 
+                        <div class="font-semibold text-yellow-400">
+                        <data class="month">Month</data>
+                        <data class="dayOfMonth"></data>
+                        ,
+                        <data class="year">0000</data>
+                        </div>
+                        </div>
+                        
+                <h1 class="font-bold text-4xl text-gray-50 drop-shadow">City</h1>
+                <div class="flex flex-col justify-center items-center">
+        
+                    <div class="flex justify-center items-center text-gray-700 font-semibold">
+                        <data class="hours text-lg">HH</data>
+                            <data class="colon text-xl">:</data>
+                            <data class="minutes text-xl">MM</data>
+                            <data class="colon text-xl">:</data>
+                            <data class="seconds text-xl">SS</data>
+                            <data class="amOrPM text-sm px-1">AM/PM</data>
+        
+                    </div>
+                </div>
+                <div class="avatar pt-6">
+                <img class="ring-blue-500 ring-offset-base-100 w-24 rounded-full ring ring-offset-2" src="" alt="weather">
+                </div>
+                <h3 class="p-3 italic font-semibold" id="desc">desc</h3>
+                <h3 id="temp" class="stat-figure text-blue-300">Temp</h3>
+                <h3 class="p-3" id="wind">wind</h3>
+                Feels like: 
+                <h3 class="stat-figure text-blue-300" id="feels">Feels</h3>
+            </div>
+            <br>
+  
+                <br>
+            <div class="flex flex-col justify-center items-center">
+                <h3 class="text-lg text-primary font-semibold drop-shadow"><i><u>Buisiness Speak of the day:</u></i></h3>
+                <h4 class="px-12 py-2 overflow-ellipsis text-center" id="bizPhrase">Trailblazers</h4>
+            </div>
+        </div>
+	</div>
+</div>
+	
 </BaseLayout>
